@@ -3,34 +3,35 @@ import { Route } from "react-router-dom";
 import AddBookmark from "./AddBookmark/AddBookmark";
 import BookmarkList from "./BookmarkList/BookmarkList";
 import BookmarksContext from "./BookmarksContext";
+import EditBookmark from "./EditBookmark/EditBookmark";
 import Nav from "./Nav/Nav";
 import config from "./config";
-import Rating from "./Rating/Rating";
+//import Rating from "./Rating/Rating";
 import "./App.css";
 
-const bookmarks = [
-  // {
-  //   id: 0,
-  //   title: 'Google',
-  //   url: 'http://www.google.com',
-  //   rating: '3',
-  //   desc: 'Internet-related services and products.'
-  // },
-  // {
-  //   id: 1,
-  //   title: 'Thinkful',
-  //   url: 'http://www.thinkful.com',
-  //   rating: '5',
-  //   desc: '1-on-1 learning to accelerate your way to a new high-growth tech career!'
-  // },
-  // {
-  //   id: 2,
-  //   title: 'Github',
-  //   url: 'http://www.github.com',
-  //   rating: '4',
-  //   desc: 'brings together the world\'s largest community of developers.'
-  // }
-];
+//const bookmarks = [
+// {
+//   id: 0,
+//   title: 'Google',
+//   url: 'http://www.google.com',
+//   rating: '3',
+//   desc: 'Internet-related services and products.'
+// },
+// {
+//   id: 1,
+//   title: 'Thinkful',
+//   url: 'http://www.thinkful.com',
+//   rating: '5',
+//   desc: '1-on-1 learning to accelerate your way to a new high-growth tech career!'
+// },
+// {
+//   id: 2,
+//   title: 'Github',
+//   url: 'http://www.github.com',
+//   rating: '4',
+//   desc: 'brings together the world\'s largest community of developers.'
+// }
+//];
 
 class App extends Component {
   state = {
@@ -61,6 +62,15 @@ class App extends Component {
     });
   };
 
+  updateBookmark = updatedBookmark => {
+    const newBookmarks = this.state.bookmarks.map(book =>
+      book.id === updatedBookmark.id ? updatedBookmark : book
+    );
+    this.setState({
+      articles: newBookmarks
+    });
+  };
+
   componentDidMount() {
     fetch(config.API_ENDPOINT, {
       method: "GET",
@@ -83,7 +93,8 @@ class App extends Component {
     const contextValue = {
       bookmarks: this.state.bookmarks,
       addBookmark: this.addBookmark,
-      deleteBookmark: this.deleteBookmark
+      deleteBookmark: this.deleteBookmark,
+      updateBookmark: this.updateBookmark
     };
     return (
       <main className="App">
@@ -93,7 +104,8 @@ class App extends Component {
           <div className="content" aria-live="polite">
             <Route path="/add-bookmark" component={AddBookmark} />
             <Route exact path="/" component={BookmarkList} />
-            <Rating />
+            <Route path="/edit-bookmark/:bookmarkId" component={EditBookmark} />
+            {/*<Rating />*/}
           </div>
         </BookmarksContext.Provider>
       </main>

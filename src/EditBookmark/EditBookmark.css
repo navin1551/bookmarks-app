@@ -1,0 +1,4 @@
+.edit-bookmarks-section {
+  display: flex;
+  flex-direction: column;
+}

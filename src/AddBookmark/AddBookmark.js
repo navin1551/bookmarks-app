@@ -7,6 +7,11 @@ import "./AddBookmark.css";
 const Required = () => <span className="AddBookmark__required">*</span>;
 
 class AddBookmark extends Component {
+  static propTypes = {
+    history: PropTypes.shape({
+      push: PropTypes.func
+    }).isRequired
+  };
   static contextType = BookmarksContext;
 
   state = {
@@ -122,6 +127,7 @@ class AddBookmark extends Component {
   }
 }
 
+/*
 AddBookmark.defaultProps = {
   rating: 1,
   description: ""
@@ -165,5 +171,6 @@ AddBookmark.propTypes = {
   rating: PropTypes.number,
   description: PropTypes.string
 };
+*/
 
 export default AddBookmark;
